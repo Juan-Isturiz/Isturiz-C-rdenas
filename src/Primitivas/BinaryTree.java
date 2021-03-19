@@ -46,7 +46,6 @@ public class BinaryTree {
         }
         return empty;
     }
-
     public void insert(String name, int clave) {
         Nodo inserted = new Nodo(name, clave);
         if (this.is_Empty()) {
@@ -59,7 +58,20 @@ public class BinaryTree {
                     JOptionPane.showMessageDialog(null, "El nodo que desea insertar ya existe");
                     finish = true;
                 } else if (inserted.getClave() < aux.getClave()) {
-                    
+                    if (aux.getLeft() == null) {
+                        aux.setLeft(inserted);
+                        finish = true;
+                    } else {
+                        aux = aux.getLeft();
+                    }
+                } else if (inserted.getClave() > aux.getClave()) {
+                    if (aux.getRight() == null) {
+                        aux.setRight(inserted);
+                        finish = true;
+                    } else {
+                        aux = aux.getRight();
+                    }
+
                 }
             }
         }
