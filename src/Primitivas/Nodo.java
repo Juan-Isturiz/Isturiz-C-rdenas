@@ -10,13 +10,17 @@ package Primitivas;
  * @author yunch
  */
 public class Nodo {
+
     private int clave;
     private Nodo left;
     private Nodo right;
-    public Nodo(){
-        this.clave = 0;
+    private String name;
+
+    public Nodo(String name, int clave) {
+        this.clave = clave;
         this.left = null;
         this.right = null;
+        this.name = name;
     }
 
     /**
@@ -60,11 +64,26 @@ public class Nodo {
     public void setRight(Nodo right) {
         this.right = right;
     }
-    public boolean is_Leaf(){
+
+    public boolean is_Leaf() {
         boolean leif = false;
-        if (right==null && left==null){
+        if (right == null && left == null) {
             leif = true;
         }
         return leif;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }
