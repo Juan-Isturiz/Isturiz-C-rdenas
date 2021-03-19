@@ -14,6 +14,7 @@ public class Nodo {
     private int clave;
     private Nodo left;
     private Nodo right;
+    private Nodo padre;
     private String name;
 
     public Nodo(String name, int clave) {
@@ -21,6 +22,7 @@ public class Nodo {
         this.left = null;
         this.right = null;
         this.name = name;
+        this.padre = null;
     }
 
     /**
@@ -85,5 +87,29 @@ public class Nodo {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the padre
+     */
+    public Nodo getPadre() {
+        return padre;
+    }
+
+    /**
+     * @param padre the padre to set
+     */
+    public void setPadre(Nodo padre) {
+        this.padre = padre;
+    }
+    public void release(Nodo released){
+        if(released.getClave() == left.getClave()){
+            left.setPadre(null);
+            this.setLeft(null);
+        }
+        else if(released.getClave() == right.getClave()){
+            right.setPadre(null);
+            this.setRight(null);
+        }
     }
 }
