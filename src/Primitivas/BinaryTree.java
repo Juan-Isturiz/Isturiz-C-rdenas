@@ -6,6 +6,8 @@
 package Primitivas;
 
 import javax.swing.JOptionPane;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 
 /**
  * Clase para los Arboles binarios Clase Arbol binario se crea sin parametros
@@ -66,7 +68,7 @@ public class BinaryTree {
                 if (inserted == aux) {
                     JOptionPane.showMessageDialog(null, "El nodo que desea insertar ya existe");
                     finish = true;
-                } else if (inserted.getClave() < aux.getClave()) {
+                } else if (inserted.getClave() > aux.getClave()) {
                     if (aux.getLeft() == null) {
                         aux.setLeft(inserted);
                         inserted.setPadre(aux);
@@ -74,7 +76,7 @@ public class BinaryTree {
                     } else {
                         aux = aux.getLeft();
                     }
-                } else if (inserted.getClave() > aux.getClave()) {
+                } else if (inserted.getClave() < aux.getClave()) {
                     if (aux.getRight() == null) {
                         aux.setRight(inserted);
                         inserted.setPadre(aux);
@@ -174,15 +176,15 @@ public class BinaryTree {
                 }
             } else {
                 aux = this.minv(deleted);
-                if (aux != deleted.getRight()){
+                if (aux != deleted.getRight()) {
                     aux.setRight(deleted.getRight());
                     deleted.getRight().setPadre(aux);
                 }
-                if (aux != deleted.getLeft()){
+                if (aux != deleted.getLeft()) {
                     aux.setLeft(deleted.getLeft());
                     deleted.getLeft().setPadre(aux);
                 }
-                
+
                 if (deleted != proot) {
                     if (deleted == deleted.getPadre().getRight()) {
                         deleted.getPadre().setRight(aux);
@@ -191,10 +193,37 @@ public class BinaryTree {
                     }
                     aux.setPadre(deleted.getPadre());
 
-                }else{
+                } else {
                     this.proot = aux;
                 }
             }
         }
+    }
+
+    public Graph sincro(Graph a, Nodo root) {
+        System.setProperty("org.graphstream.ui", "swing");
+        a.setAttribute("ui.antialias");
+        a.setAttribute("ui.stylesheet", "graph { padding: 40px; } node { text-alignment: at-right; text-padding: 3px, 2px; text-background-mode: rounded-box; text-background-color: #EB2; text-color: #222; }edge {size: 3px; fill-color: #444;padding: -10px, -10px; }");
+        String id = root.getName();
+        a.addNode(id);
+        if (root.getRight() != null) {
+            this.sincro(a, root.getRight());
+            String edgeid = id + root.getRight().getName();
+            a.addEdge(edgeid, a.getNode(root.getName()), a.getNode(root.getRight().getName()),true);
+        }
+        if (root.getLeft() != null) {
+            this.sincro(a, root.getLeft());
+            String edgeid = id + root.getLeft().getName();
+            a.addEdge(edgeid, a.getNode(id), a.getNode(root.getLeft().getName()),true);
+        }
+        
+        for (Node node : a) {
+            node.setAttribute("ui.label", node.getId());
+            
+        }
+        return a;
+    }
+    public void showGraph(Graph a){
+        
     }
 }
