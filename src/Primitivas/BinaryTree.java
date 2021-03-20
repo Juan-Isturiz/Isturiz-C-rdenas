@@ -85,8 +85,15 @@ public class BinaryTree {
 
                 }
             }
+
         }
     }
+    public int getHeight(Nodo root){
+        if (root == null)
+            return 0;
+        return Math.max(getHeight(root.getLeft()), getHeight(root.getRight())) + 1;
+    }
+
 
     /**
      * Método auxiliar para buscar claves en el arbol Este metodo retornara un
@@ -132,6 +139,13 @@ public class BinaryTree {
             aux = aux.getLeft();
         }
         return aux;
+    }
+    
+    //JUAN ESTE ES MI DESASTRE NO SE
+      private int setHeight(Nodo setClave){
+        if (setClave == null)
+            return 0;
+        return setClave.setHeight;
     }
 
     public void remove(int clave) {
