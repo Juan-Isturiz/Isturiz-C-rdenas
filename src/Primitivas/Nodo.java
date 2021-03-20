@@ -16,6 +16,7 @@ public class Nodo {
     private Nodo right;
     private Nodo padre;
     private String name;
+    private int height;
 
     public Nodo(String name, int clave) {
         this.clave = clave;
@@ -23,11 +24,19 @@ public class Nodo {
         this.right = null;
         this.name = name;
         this.padre = null;
+        this.height = 1;
     }
 
     /**
      * @return the clave
      */
+    public int getHeight(){
+        return height;
+    }
+    public void setHeight(int height){
+        this.height = 1;
+    }
+    
     public int getClave() {
         return clave;
     }
@@ -112,4 +121,5 @@ public class Nodo {
             this.setRight(null);
         }
     }
+
 }

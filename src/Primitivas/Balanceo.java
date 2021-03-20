@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 package Primitivas;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Aida
- */
 public class Balanceo {
     
     

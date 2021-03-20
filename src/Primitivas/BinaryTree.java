@@ -139,14 +139,7 @@ public class BinaryTree {
             aux = aux.getLeft();
         }
         return aux;
-    }
-    
-    //JUAN ESTE ES MI DESASTRE NO SE
-      private int setHeight(Nodo setClave){
-        if (setClave == null)
-            return 0;
-        return setClave.setHeight;
-    }
+    } 
 
     public void remove(int clave) {
         Nodo deleted = this.search(clave);
