@@ -8,6 +8,7 @@ package Primitivas;
 import javax.swing.JOptionPane;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.ui.view.Viewer;
 
 /**
  * Clase para los Arboles binarios Clase Arbol binario se crea sin parametros
@@ -48,6 +49,7 @@ public class BinaryTree {
         }
         return empty;
     }
+    
 
     /**
      * Método para insertar nuevos nodos Este método insertará un elemento
@@ -104,9 +106,9 @@ public class BinaryTree {
         Nodo found = null;
         if (root.getClave() == clave) {
             found = root;
-        } else if (root.getClave() > clave) {
-            found = this.buscar(clave, root.getLeft());
         } else if (root.getClave() < clave) {
+            found = this.buscar(clave, root.getLeft());
+        } else if (root.getClave() > clave) {
             found = this.buscar(clave, root.getRight());
         }
         return found;
@@ -209,21 +211,60 @@ public class BinaryTree {
         if (root.getRight() != null) {
             this.sincro(a, root.getRight());
             String edgeid = id + root.getRight().getName();
-            a.addEdge(edgeid, a.getNode(root.getName()), a.getNode(root.getRight().getName()),true);
+            a.addEdge(edgeid, a.getNode(root.getName()), a.getNode(root.getRight().getName()), true);
         }
         if (root.getLeft() != null) {
             this.sincro(a, root.getLeft());
             String edgeid = id + root.getLeft().getName();
-            a.addEdge(edgeid, a.getNode(id), a.getNode(root.getLeft().getName()),true);
+            a.addEdge(edgeid, a.getNode(id), a.getNode(root.getLeft().getName()), true);
         }
-        
+
         for (Node node : a) {
             node.setAttribute("ui.label", node.getId());
-            
+
         }
         return a;
     }
-    public void showGraph(Graph a){
-        
+
+    public void showGraph(Graph a) {
+        Viewer view = a.display();
+        Nodo aux;
+        if (this.is_Empty()) {
+            view.disableAutoLayout();
+            a.getNode(this.getProot().getName()).setAttribute("ui.frozen");
+            a.getNode(this.getProot().getName()).setAttribute("x", 0);
+            a.getNode(this.getProot().getName()).setAttribute("y", 40);
+            view.enableAutoLayout();
+            if (proot.getRight() != null) {
+                aux = proot.getRight();
+                while (aux.getRight() != null){
+                    aux = aux.getRight();
+                }
+                a.getNode(this.getProot().getRight().getName()).setAttribute("ui.frozen");
+                a.getNode(this.getProot().getRight().getName()).setAttribute("x", 20);
+                a.getNode(this.getProot().getRight().getName()).setAttribute("y", -10);
+                a.display();
+                view.disableAutoLayout();
+                a.getNode(aux.getName()).setAttribute("ui.frozen");
+                a.getNode(aux.getName()).setAttribute("xy",20, -20);
+                view.enableAutoLayout();
+            }
+            if (proot.getLeft() != null) {
+                aux = proot.getLeft();
+                while (aux.getLeft() != null){
+                    aux = aux.getLeft();
+                }
+                view.disableAutoLayout();
+                a.getNode(this.getProot().getLeft().getName()).setAttribute("ui.frozen");
+                a.getNode(this.getProot().getLeft().getName()).setAttribute("x", -20);
+                a.getNode(this.getProot().getLeft().getName()).setAttribute("y", -20);
+                a.display();
+                a.getNode(aux.getName()).setAttribute("ui.frozen");
+                a.getNode(aux.getName()).setAttribute("xy",-20, -20);
+                
+                
+            }
+
+        }
     }
 }
